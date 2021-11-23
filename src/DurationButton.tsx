@@ -1,4 +1,5 @@
 import React from "react";
+import { SettingsPanel, SettingsButton, SettingsText } from "./SettingsStyledComponents";
 
 type Props = {
   noteDuration: number;
@@ -12,11 +13,11 @@ const DurationButton: React.FC<Props> = ({
   decreaseCallback,
 }) => {
   return (
-    <div>
-      <button onClick={decreaseCallback}>decrease</button>
-      <h1>{noteDuration}</h1>
-      <button onClick={increaseCallback}>increase</button>
-    </div>
+    <SettingsPanel>
+      <SettingsButton onClick={decreaseCallback}>-</SettingsButton>
+      <SettingsText>{noteDuration}</SettingsText>
+      <SettingsButton onClick={increaseCallback}>+</SettingsButton>
+    </SettingsPanel>
   );
 };
 

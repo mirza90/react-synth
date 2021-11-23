@@ -1,4 +1,5 @@
 import React from "react";
+import { SettingsPanel, SettingsButton, SettingsText } from "./SettingsStyledComponents";
 
 type Props = {
   currentWaveShape: string;
@@ -12,11 +13,11 @@ const WaveShapeButton: React.FC<Props> = ({
   decreaseCallback,
 }) => {
   return (
-    <div>
-      <button onClick={decreaseCallback}>decrease</button>
-      <h1>{currentWaveShape}</h1>
-      <button onClick={increaseCallback}>increase</button>
-    </div>
+    <SettingsPanel>
+      <SettingsButton onClick={decreaseCallback}>-</SettingsButton>
+      <SettingsText>{currentWaveShape}</SettingsText>
+      <SettingsButton onClick={increaseCallback}>+</SettingsButton>
+    </SettingsPanel>
   );
 };
 
