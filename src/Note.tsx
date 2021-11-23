@@ -31,10 +31,41 @@ const White = styled.button`
 type Props = {
   color: string;
   note: NoteType;
-  clickHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  currentOctave: number;
+  noteDuration: number;
+  waveShape: OscillatorType;
 };
 
-const Note: React.FC<Props> = ({ color, note, clickHandler }) =>
-  color === "white" ? <White value={note.frequency} onClick={clickHandler} /> : <Black value={note.frequency} onClick={clickHandler} />;
+const Note: React.FC<Props> = ({ color, note, currentOctave, noteDuration, waveShape }) => {
+    const calculateFrequency = (baseFrequency: number, currentOctave: number) => {
+        console.log(baseFrequency);
+        console.log(currentOctave);
+        return baseFrequency * 2 ** (currentOctave - 4);
+      };
+      
+      const playSound = (e: React.MouseEvent<HTMLButtonElement>) => {
+        let AudioContext = new window.AudioContext();
+        const oscillator = AudioContext.createOscillator();
+        oscillator.connect(AudioContext.destination);
+        oscillator.type = waveShape;
+        const actualFrequency = calculateFrequency(
+          Number(e.currentTarget.value),
+          currentOctave
+        );
+        console.log(actualFrequency);
+        oscillator.frequency.setValueAtTime(
+          actualFrequency,
+          AudioContext.currentTime
+        );
+        oscillator.start(AudioContext.currentTime);
+        oscillator.stop(AudioContext.currentTime + noteDuration / 1000);
+      };
+      
 
+  return color === "white" ? (
+    <White value={note.frequency} onClick={playSound} />
+  ) : (
+    <Black value={note.frequency} onClick={playSound} />
+  );
+};
 export default Note;

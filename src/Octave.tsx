@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { NoteType } from "./helpers";
 import Note from "./Note";
-import playSound from "./playSounds";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,18 +12,27 @@ const Wrapper = styled.div`
 
 type Props = {
   notes: NoteType[];
+  currentOctave: number;
+  noteDuration: number;
+  waveShape: OscillatorType;
 };
 
-const Octave: React.FC<Props> = ({ notes }) => 
-{
-return (
-  <Wrapper>
-    <div>
-      {notes.map((element: NoteType) => (
-        <Note key={element.note} color={element.color} note={element} clickHandler={playSound} />
-      ))}
-    </div>
-  </Wrapper>
-);
-}
+const Octave: React.FC<Props> = ({ notes, currentOctave, noteDuration, waveShape }) => {
+  return (
+    <Wrapper>
+      <div>
+        {notes.map((element: NoteType) => (
+          <Note
+            key={element.note}
+            color={element.color}
+            note={element}
+            currentOctave={currentOctave}
+            noteDuration={noteDuration}
+            waveShape={waveShape}
+          />
+        ))}
+      </div>
+    </Wrapper>
+  );
+};
 export default Octave;
