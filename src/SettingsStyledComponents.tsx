@@ -6,6 +6,7 @@ color: white;
 width: 36px;
 height: 36px;
 margin: 1px;
+font-family: Pixel;
 :active {
   background: #333;
 }
@@ -17,6 +18,7 @@ color: white;
 height: 36px;
 width: 108px;
 display: flex;
+font-family: Pixel;
 justify-content: center;
 align-content: center;
 align-items: center;
