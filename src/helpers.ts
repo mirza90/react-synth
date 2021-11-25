@@ -4,6 +4,8 @@ export type NoteType = {
   frequency: number;
 };
 
+export const keysToNotes = "cfvgbnjmk,l.".split('');
+
 export const notes: NoteType[] = [
   {
     note: 'C',

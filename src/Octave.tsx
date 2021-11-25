@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { NoteType } from "./helpers";
 import Note from "./Note";
+import { keysToNotes } from "./helpers";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,14 +21,15 @@ const Octave: React.FC<Props> = ({ notes, currentOctave, noteDuration, waveShape
   return (
     <Wrapper>
       <div>
-        {notes.map((element: NoteType) => (
+        {keysToNotes.map((element: string, index: number) => (
           <Note
-            key={element.note}
-            color={element.color}
-            note={element}
+            key={notes[index].note}
+            color={notes[index].color}
+            note={notes[index]}
             currentOctave={currentOctave}
             noteDuration={noteDuration}
             waveShape={waveShape}
+            keyboardCode={element}
           />
         ))}
       </div>

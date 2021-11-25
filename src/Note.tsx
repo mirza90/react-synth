@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { NoteType } from "./helpers";
+import { useKey } from "./hooks";
 
 const Black = styled.button`
   background: black;
@@ -34,22 +35,26 @@ type Props = {
   currentOctave: number;
   noteDuration: number;
   waveShape: OscillatorType;
+  keyboardCode: string;
 };
 
-const Note: React.FC<Props> = ({ color, note, currentOctave, noteDuration, waveShape }) => {
+const Note: React.FC<Props> = ({ color, note, currentOctave, noteDuration, waveShape, keyboardCode }) => {
+    const keyPressed = useKey(keyboardCode);
+
+
     const calculateFrequency = (baseFrequency: number, currentOctave: number) => {
         console.log(baseFrequency);
         console.log(currentOctave);
         return baseFrequency * 2 ** (currentOctave - 4);
       };
       
-      const playSound = (e: React.MouseEvent<HTMLButtonElement>) => {
+      const playSound = () => {
         let AudioContext = new window.AudioContext();
         const oscillator = AudioContext.createOscillator();
         oscillator.connect(AudioContext.destination);
         oscillator.type = waveShape;
         const actualFrequency = calculateFrequency(
-          Number(e.currentTarget.value),
+          Number(note.frequency),
           currentOctave
         );
         console.log(actualFrequency);
@@ -60,6 +65,12 @@ const Note: React.FC<Props> = ({ color, note, currentOctave, noteDuration, waveS
         oscillator.start(AudioContext.currentTime);
         oscillator.stop(AudioContext.currentTime + noteDuration / 1000);
       };
+
+      useEffect(() => {
+        if (keyPressed) {
+          playSound()
+        }
+      }, [keyPressed, currentOctave, waveShape, noteDuration])
       
 
   return color === "white" ? (
