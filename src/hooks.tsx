@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 
 export const useKey = (targetKey: string) => {
     const [pressed, setPressed] = useState(false);
-    const onKeyDown = (key: KeyboardEvent ) => {
-        if (targetKey === key.key) setPressed(true);
-    };
-    const onKeyUp = (key: KeyboardEvent) => {
-        if (targetKey === key.key) setPressed(false);
-    };
     useEffect(() => {
+        const onKeyDown = (key: KeyboardEvent ) => {
+            if (targetKey === key.key) setPressed(true);
+        };
+        const onKeyUp = (key: KeyboardEvent) => {
+            if (targetKey === key.key) setPressed(false);
+        };
+
         window.addEventListener('keydown', onKeyDown);
         window.addEventListener('keyup', onKeyUp);
 
@@ -17,7 +18,7 @@ export const useKey = (targetKey: string) => {
             window.removeEventListener('keydown', onKeyDown);
             window.removeEventListener('keyup', onKeyUp);
         };
-    }, []);
+    }, [targetKey]);
     return pressed;
 };
 
